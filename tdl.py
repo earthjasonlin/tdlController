@@ -41,18 +41,18 @@ def get_meta_title(url, proxy):
 def execute_commands(tdl_exe, chat_link, last_timestamp, current_timestamp, proxy, output_dir):
     file_name = "我的收藏"
     if chat_link == "fav":
-        export_command = f"{tdl_exe} chat export -i {last_timestamp},{current_timestamp} --proxy {proxy} -o {output_dir}/{file_name}.json >> tdl.log"
-        download_command = f"{tdl_exe} dl -f {output_dir}/{file_name}.json --proxy {proxy} --reconnect-timeout 0 --continue --skip-same -d {output_dir}/{file_name} >> tdl.log"
+        export_command = f"{tdl_exe} chat export -i {last_timestamp},{current_timestamp} --proxy {proxy} -o {output_dir}/{file_name}.json"
+        download_command = f"{tdl_exe} dl -f {output_dir}/{file_name}.json --proxy {proxy} --reconnect-timeout 0 --continue --skip-same -d {output_dir}/{file_name}"
     else:
         file_name = re.sub(r'[<>:"/\\|?* ]', '_', get_meta_title(chat_link, proxy))
         export_command = f"{tdl_exe} chat export -c {chat_link} -i {last_timestamp},{current_timestamp} --proxy {proxy} -o {output_dir}/{file_name}.json >> tdl.log"
         download_command = f"{tdl_exe} dl -f {output_dir}/{file_name}.json --proxy {proxy} --reconnect-timeout 0 --continue --skip-same -d {output_dir}/{file_name} >> tdl.log"
     
-#     log_message(f"开始导出：{file_name}")
+    log_message(f"开始导出：{file_name}")
     subprocess.run(export_command, shell=True)
-#     log_message(f"开始下载：{file_name}")
+    log_message(f"开始下载：{file_name}")
     subprocess.run(download_command, shell=True)
-#     log_message(f"下载完成：{file_name}")
+    log_message(f"下载完成：{file_name}")
 
 
 def main(tdl_exe, file_path, proxy, output_dir, sleep_time):
